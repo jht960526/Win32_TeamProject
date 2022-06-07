@@ -1,5 +1,4 @@
 #include <windows.h>
-#include <tchar.h>
 
 HINSTANCE g_hinst;
 LPCTSTR lpszClass = L"Team Project ";
