@@ -3,8 +3,10 @@
 
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
+#include "CSceneMgr.h"
 
 #include "CObject.h"
+
 
 //CCore* CCore::g_pInst = nullptr;
 
@@ -54,7 +56,7 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	// Manager ÃÊ±âÈ­
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
-
+	CSceneMgr::GetInst()->init();
 
 
 
@@ -98,23 +100,24 @@ void CCore::update()
 
 	Vec2 vPos = g_obj.GetPos();
 
+	//GetAsyncKeyState(VK_LEFT) & 0x8000
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::HOLD)
 	{
 		vPos.x -= 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::HOLD)
 	{
 		vPos.x += 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::UP) == KEY_STATE::HOLD)
 	{
 		vPos.y -= 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::DOWN) == KEY_STATE::HOLD)
 	{
 		vPos.y += 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
