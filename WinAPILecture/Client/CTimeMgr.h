@@ -26,9 +26,9 @@ public:
 	// 매 프레임마다 호출
 	void update();
 
-private:
-	CTimeMgr();
-	~CTimeMgr();
+//private:
+//	CTimeMgr();
+//	~CTimeMgr();
 
 public:
 	double GetDT() { return m_dDT; }

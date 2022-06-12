@@ -83,8 +83,8 @@ public:
 	void update();
 
 private:
-	CKeyMgr();
-	~CKeyMgr();
+	//CKeyMgr();
+	//~CKeyMgr();
 
 public:
 	KEY_STATE GetKeyState(KEY _eKey)

@@ -64,8 +64,6 @@ private:
 	void update();
 	void render();
 
-	CCore();
-	~CCore();
 
 public:
 	HWND GetMainHwnd() { return m_hwnd; }

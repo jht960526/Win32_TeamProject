@@ -1,7 +1,6 @@
 #pragma once
 class CObject
 {
-	SINGLE(CObject);
 
 private:
 	Vec2 m_vPos;
@@ -16,7 +15,7 @@ public:
 
 public:
 	CObject();
-	~CObject();
+	virtual ~CObject();
 
 };
 

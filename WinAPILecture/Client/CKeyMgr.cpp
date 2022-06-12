@@ -74,7 +74,7 @@ void CKeyMgr::update()
 
 	HWND hWnd = GetFocus();
 
-	// 현재 윈도우 창이 있는지 없는지
+	// 윈도우 포커싱 중일 때 키 이벤트 동작
 
 	if (nullptr != hWnd)
 	{
@@ -123,6 +123,16 @@ void CKeyMgr::update()
 		for (int i = 0; i < (int)KEY::LAST; i++)
 		{
 			m_vecKey[i].bPrevPush = false;
+
+			if (KEY_STATE::TAP == m_vecKey[i].eState || KEY_STATE::HOLD == m_vecKey[i].eState)
+			{
+				m_vecKey[i].eState = KEY_STATE::AWAY;
+			}
+
+			else if (KEY_STATE::AWAY == m_vecKey[i].eState)
+			{
+				m_vecKey[i].eState = KEY_STATE::NONE;
+			}
 
 		}
 	}
