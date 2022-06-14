@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="Client.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CObject.cpp" />

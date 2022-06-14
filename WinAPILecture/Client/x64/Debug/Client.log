@@ -1,4 +1,4 @@
 ﻿  CCore.cpp
 C:\Users\user\Desktop\윈플\Win32_TeamProject-main\Win32_TeamProject-main\WinAPILecture\Client\CCore.cpp(149,10): warning C4804: '<=': 연산에 'bool' 형식을 사용하는 것은 안전하지 않습니다.
-C:\Users\user\Desktop\윈플\Win32_TeamProject-main\Win32_TeamProject-main\WinAPILecture\Client\CCore.cpp(149,45): warning C4804: '<=': 연산에 'bool' 형식을 사용하는 것은 안전하지 않습니다.
+C:\Users\user\Desktop\윈플\Win32_TeamProject-main\Win32_TeamProject-main\WinAPILecture\Client\CCore.cpp(149,47): warning C4804: '<=': 연산에 'bool' 형식을 사용하는 것은 안전하지 않습니다.
   Client.vcxproj -> C:\Users\user\Desktop\윈플\Win32_TeamProject-main\Win32_TeamProject-main\WinAPILecture\x64\Debug\Client.exe

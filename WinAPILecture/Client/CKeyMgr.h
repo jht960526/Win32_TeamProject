@@ -60,6 +60,8 @@ enum class KEY
 	ENTER,
 	ESC,
 	LBUTTON,
+	RBUTTON,
+	TAB,
 
 	LAST,
 };
