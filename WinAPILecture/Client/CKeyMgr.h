@@ -59,6 +59,7 @@ enum class KEY
 	SPACE,
 	ENTER,
 	ESC,
+	LBUTTON,
 
 	LAST,
 };
