@@ -67,5 +67,5 @@ private:
 
 public:
 	HWND GetMainHwnd() { return m_hwnd; }
-
+	Vec2 GetResolution() { return Vec2((INT)m_ptResolution.x, (INT)m_ptResolution.y); }
 };

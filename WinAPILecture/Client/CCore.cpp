@@ -6,9 +6,10 @@
 #include "CSceneMgr.h"
 
 #include "CObject.h"
-
+#include "Camera.h"
 #include "playerOBJ.h"
 #include "Weapons.h"
+#include <atlimage.h>
 
 
 //CCore* CCore::g_pInst = nullptr;
@@ -66,15 +67,14 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
+	
 
 
-
-	g_obj.SetPos(Vec2((float)m_ptResolution.x / 2, (float)m_ptResolution.y / 2));
-	g_obj.SetScale(Vec2(100, 100));
-
-	g_player.Setp_Pos(Vec2((float)m_ptResolution.x / 2, (float)m_ptResolution.y / 2));
+	//g_obj.SetPos(Vec2((float)m_ptResolution.x / 2, (float)m_ptResolution.y / 2));
+	//g_obj.SetScale(Vec2(100, 100));
+	Camera::GetInst()->SetTargetObj(&g_player);
+	g_player.Setp_Pos(Vec2((float)m_ptResolution.x/2, (float)m_ptResolution.y/2));
 	g_player.Setp_Scale(Vec2(20, 20));
-
 	return S_OK;
 }
 
@@ -98,6 +98,7 @@ void CCore::progress()
 	// Manager Update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
+	Camera::GetInst()->update();
 
 	
 
@@ -115,23 +116,22 @@ void CCore::update()
 {
 
 	Vec2 vPos = g_player.Getp_Pos();
-	
+
 	POINT cursor;
 	static bool cooldown;
 
 	GetCursorPos(&cursor);
-
 	if (CKeyMgr::GetInst()->GetKeyState(KEY::LBUTTON) == KEY_STATE::HOLD) {
 		if (!cooldown) {
 			BulletOBJ[Bulletcnt].SetPos(vPos);
-			BulletOBJ[Bulletcnt].FireBullet(Vec2(10, 10), g_player.Getp_Pos()
+			BulletOBJ[Bulletcnt].FireBullet(Vec2(10, 10), vPos
 				, Vec2((float)cursor.x-106, (float)cursor.y-150), 1);
 			Bulletcnt++;
 			if (Bulletcnt == 500)Bulletcnt = 0;
-			cooldown = true;
+			//cooldown = true;
 		}
 		else {
-			if (CTimeMgr::GetInst()->GetfAcc() < 0.999)
+			if (CTimeMgr::GetInst()->GetfAcc() > 0.999)
 				cooldown = false;
 		}
 		
@@ -146,7 +146,7 @@ void CCore::update()
 			BPos.x += BulletOBJ[i].GetAngle().x * 500.f * CTimeMgr::GetInst()->GetfDT();
 			BPos.y += BulletOBJ[i].GetAngle().y * 500.f * CTimeMgr::GetInst()->GetfDT();
 
-			if (0 <= BPos.x <= m_ptResolution.x && 0 <= BPos.y <= m_ptResolution.y)
+			if (0 <= BPos.x <= 2*m_ptResolution.x && 0 <= BPos.y <= 2*m_ptResolution.y)
 				BulletOBJ[i].SetPos(BPos);
 			else BulletOBJ[i].TurnOff();
 		}
@@ -189,20 +189,25 @@ void CCore::render()
 {
 	
 	// 화면 Clear
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
-
+	//Rectangle(m_memDC, 0, 0, m_ptResolution.x, m_ptResolution.y);
+	CImage img;
+	img.Load(TEXT("bg_forest.png"));
+	img.Draw(m_memDC, 0, 0, m_ptResolution.x, m_ptResolution.y, 0, 0, 1024, 1024);
+	
 	// 그리기
 	Vec2 vPos = g_player.Getp_Pos();
+	Vec2 R_Bpos = {};
 	Vec2 vScale = g_player.Getp_Scale();
+	Vec2 vRenderPos = Camera::GetInst()->GetRenderPos(vPos);
 
 	for (int i = 0; i < 500; i++) {
 		if (BulletOBJ[i].CheckBullet() == true) {
-			
+			R_Bpos = BulletOBJ[i].GetPos();
 			Ellipse(m_memDC
-				, int(BulletOBJ[i].GetPos().x - (BulletOBJ[i].GetScale().x / 2.f))
-				, int(BulletOBJ[i].GetPos().y - (BulletOBJ[i].GetScale().y / 2.f))
-				, int(BulletOBJ[i].GetPos().x + (BulletOBJ[i].GetScale().x / 2.f))
-				, int(BulletOBJ[i].GetPos().y + (BulletOBJ[i].GetScale().y / 2.f)));
+				, int(R_Bpos.x - (BulletOBJ[i].GetScale().x / 2.f))
+				, int(R_Bpos.y - (BulletOBJ[i].GetScale().y / 2.f))
+				, int(R_Bpos.x + (BulletOBJ[i].GetScale().x / 2.f))
+				, int(R_Bpos.y + (BulletOBJ[i].GetScale().y / 2.f)));
 
 		}
 	}
@@ -215,6 +220,9 @@ void CCore::render()
 		, int(vPos.y + (vScale.y / 2.f)));
 
 	// 메모리 복사
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC
-		, 0, 0, SRCCOPY);
+	BitBlt(m_hDC, 0,
+		0,
+		m_ptResolution.x,
+		 m_ptResolution.y ,
+		m_memDC, 0, 0, SRCCOPY);
 }

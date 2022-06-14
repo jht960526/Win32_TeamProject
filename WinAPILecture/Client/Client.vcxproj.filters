@@ -44,6 +44,9 @@
     <Filter Include="Engine\04.Object\player">
       <UniqueIdentifier>{0822ef85-5320-4aca-b38e-85f60ea18271}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\CameraMgr">
+      <UniqueIdentifier>{726a5d01-4b79-4bb8-a1a0-0073140a163f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -92,6 +95,9 @@
     <ClInclude Include="Weapons.h">
       <Filter>Engine\04.Object\player</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\03.Manager\CameraMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -123,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Weapons.cpp">
       <Filter>Engine\04.Object\player</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\03.Manager\CameraMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
